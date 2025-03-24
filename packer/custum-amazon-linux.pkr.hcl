@@ -10,7 +10,7 @@ packer {
 source "amazon-ebs" "amazon-linux" {
   ami_name = "custom-amazon-linux-ami-${formatdate("YYYY-MM-DD-hhmmss", timestamp())}"
   instance_type = "t2.micro"
-  region        = var.region
+  region        = var.aws_region
   source_ami    = "ami-08b5b3a93ed654d19"
   ssh_username  = "ec2-user"
   access_key    = var.aws_access_key
@@ -45,5 +45,4 @@ build {
       "chown ec2-user:ec2-user /home/ec2-user/.ssh/authorized_keys"
     ]
   }
-
 }
