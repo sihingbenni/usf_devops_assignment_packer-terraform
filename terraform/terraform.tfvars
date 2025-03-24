@@ -1,0 +1,6 @@
+aws_access_key    = "YOUR_ACCESS_KEY"
+aws_secret_key    = "YOUR_SECRET_KEY"
+aws_session_token = "YOUR_SESSION_TOKEN"
+aws_region        = "us-west-2"
+your_ip_address   = "your_ip_address/32"
+ami_id            = "your_ami_id"
