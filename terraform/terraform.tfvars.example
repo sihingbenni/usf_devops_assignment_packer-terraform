@@ -1,0 +1,6 @@
+aws_access_key    = "<CHANGE_ME>"
+aws_secret_key    = "<CHANGE_ME>"
+aws_session_token = "<CHANGE_ME>"
+aws_region        = "us-east-1"
+your_ip_address   = "<CHANGE_ME>/32"
+ami_id            = "<CHANGE_ME>"
