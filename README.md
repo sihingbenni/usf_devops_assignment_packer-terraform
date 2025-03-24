@@ -41,6 +41,7 @@ Run the following commands to create a custom AWS AMI using Packer:
 ### Task B: Terraform
 Run the following commands to provision AWS resources using Terraform:
 1. `cd terraform` to navigate to the terraform directory
+   1. (If needed cd back to the root directory and then navigate to the terraform directory)
 2. Copy the `terraform.tfvars.example` file to `terraform.tfvars` and fill in the required variables
 3. Run `terraform init` to initialize the terraform modules
 4. Run `terraform validate` to validate the terraform scripts
@@ -58,3 +59,5 @@ Run the following commands to provision AWS resources using Terraform:
 - ![Private Instance](terraform/expected_results/private_instance_overview.png)
 - SSH Connection to Bastion Host: `ssh -i <path_to_private_key> ec2-user@<bastion_public_ip>`
 - ![SSH Connection](terraform/expected_results/ssh_to_bastion_host.png)
+- Terraform Output log:
+- View: [Log Output](terraform/expected_results/terraform_output.log)
