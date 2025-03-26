@@ -2,6 +2,7 @@ resource "aws_security_group" "bastion-allow-ssh" {
   vpc_id      = aws_vpc.main.id
   name        = "bastion-allow-ssh"
   description = "security group for bastion that allows ssh and all egress traffic"
+
   egress {
     from_port   = 0
     to_port     = 0
