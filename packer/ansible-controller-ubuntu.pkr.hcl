@@ -1,5 +1,5 @@
 source "amazon-ebs" "ansible-controller-ubuntu" {
-  ami_name      = "custom-ubuntu-ami-${formatdate("YYYY-MM-DD-hhmmss", timestamp())}"
+  ami_name      = "ansible-controller-ami-${formatdate("YYYY-MM-DD-hhmmss", timestamp())}"
   instance_type = "t2.micro"
   region        = var.aws_region
   source_ami    = "ami-084568db4383264d4" # Ubuntu 24.04 LTS
@@ -10,15 +10,10 @@ source "amazon-ebs" "ansible-controller-ubuntu" {
 }
 
 build {
-  name = "custom-ubuntu-build"
+  name = "ansible-controller-build"
   sources = [
-    "source.amazon-ebs.ubuntu"
+    "source.amazon-ebs.ansible-controller-ubuntu"
   ]
-
-  # install docker
-  provisioner "shell" {
-    script = "scripts/install_docker_ubuntu.sh"
-  }
 
   # Add the public key, so that the Bastion Host can connect to the Ansible Controller
   provisioner "file" {
@@ -30,6 +25,14 @@ build {
   provisioner "file" {
     source      = var.private_key_path
     destination = "/home/ubuntu/.ssh/id_rsa"
+  }
+
+  # modify permissions for the private key
+  provisioner "shell" {
+    inline = [
+      "chmod 600 /home/ubuntu/.ssh/id_rsa",
+      "chown ubuntu:ubuntu /home/ubuntu/.ssh/id_rsa"
+    ]
   }
 
   provisioner "shell" {
