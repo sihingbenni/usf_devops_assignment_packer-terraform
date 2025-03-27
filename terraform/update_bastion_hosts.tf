@@ -2,8 +2,8 @@ data "template_file" "update_hosts_script" {
   template = file("${path.module}/scripts/update_hosts.sh.tpl")
 
   vars = {
-    ansible_controller_ip = aws_instance.ansible_controller.private_ip
-    private_linux_instances = jsonencode(aws_instance.private_linux_instances)
+    ansible_controller_ip    = aws_instance.ansible_controller.private_ip
+    private_linux_instances  = jsonencode(aws_instance.private_linux_instances)
     private_ubuntu_instances = jsonencode(aws_instance.private_ubuntu_instances)
   }
 }
