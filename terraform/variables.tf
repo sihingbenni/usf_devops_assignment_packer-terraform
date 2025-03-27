@@ -28,7 +28,12 @@ variable "your_ip_address" {
   description = "Your IP Address"
 }
 
-variable "ami_id" {
+variable "linux_ami_id" {
   type        = string
-  description = "ID of the AMI created by Packer"
+  description = "ID of the Linux AMI created by Packer"
+}
+
+variable "ubuntu_ami_id" {
+  type        = string
+  description = "ID of the Ubuntu AMI created by Packer"
 }
