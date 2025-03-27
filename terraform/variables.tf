@@ -37,3 +37,13 @@ variable "ubuntu_ami_id" {
   type        = string
   description = "ID of the Ubuntu AMI created by Packer"
 }
+
+variable "public_key_path" {
+    type        = string
+    description = "Path to your public key"
+}
+
+variable "private_key_path" {
+    type        = string
+    description = "Path to your private key"
+}
