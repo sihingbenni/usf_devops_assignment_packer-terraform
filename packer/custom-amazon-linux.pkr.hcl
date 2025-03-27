@@ -1,14 +1,5 @@
-packer {
-  required_plugins {
-    amazon = {
-      version = ">= 1.3.6"
-      source  = "github.com/hashicorp/amazon"
-    }
-  }
-}
-
 source "amazon-ebs" "amazon-linux" {
-  ami_name = "custom-amazon-linux-ami-${formatdate("YYYY-MM-DD-hhmmss", timestamp())}"
+  ami_name      = "custom-amazon-linux-ami-${formatdate("YYYY-MM-DD-hhmmss", timestamp())}"
   instance_type = "t2.micro"
   region        = var.aws_region
   source_ami    = "ami-08b5b3a93ed654d19"
@@ -44,5 +35,9 @@ build {
       "chmod 600 /home/ec2-user/.ssh/authorized_keys",
       "chown ec2-user:ec2-user /home/ec2-user/.ssh/authorized_keys"
     ]
+  }
+
+  post-processor "manifest" {
+    output = "manifest-amazon-linux.json"
   }
 }
