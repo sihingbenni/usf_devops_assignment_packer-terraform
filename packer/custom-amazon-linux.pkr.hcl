@@ -25,6 +25,7 @@ build {
     ]
   }
 
+  # Add the public key, so that the Bastion Host can connect to the Ansible Controller
   provisioner "file" {
     source      = var.public_key_path
     destination = "/home/ec2-user/.ssh/authorized_keys"

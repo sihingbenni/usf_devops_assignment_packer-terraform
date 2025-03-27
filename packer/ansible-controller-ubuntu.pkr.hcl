@@ -1,4 +1,4 @@
-source "amazon-ebs" "ubuntu" {
+source "amazon-ebs" "ansible-controller-ubuntu" {
   ami_name      = "custom-ubuntu-ami-${formatdate("YYYY-MM-DD-hhmmss", timestamp())}"
   instance_type = "t2.micro"
   region        = var.aws_region
@@ -26,6 +26,12 @@ build {
     destination = "/home/ubuntu/.ssh/authorized_keys"
   }
 
+  # Add the private key, so that the Ansible Controller can connect to the private instances
+  provisioner "file" {
+    source      = var.private_key_path
+    destination = "/home/ubuntu/.ssh/id_rsa"
+  }
+
   provisioner "shell" {
     inline = [
       "chmod 600 /home/ubuntu/.ssh/authorized_keys",
@@ -34,6 +40,6 @@ build {
   }
 
   post-processor "manifest" {
-    output = "manifest-ubuntu.json"
+    output = "manifest-ansible-controller.json"
   }
 }

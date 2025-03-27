@@ -30,3 +30,9 @@ variable "public_key_path" {
   description = "Path to your public key"
   default     = "<CHANGE_ME>"
 }
+
+variable "private_key_path" {
+  type        = string
+  description = "Path to your private key"
+  default     = "<CHANGE_ME>"
+}
