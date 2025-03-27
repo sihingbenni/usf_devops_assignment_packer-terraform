@@ -21,6 +21,29 @@ resource "aws_security_group" "bastion-allow-ssh" {
   }
 }
 
+resource "aws_security_group" "allow-ssh-for-private-instances" {
+  vpc_id      = aws_vpc.main.id
+  name        = "allow-ssh-for-private-instances"
+  description = "security group for providing ssh access to private instances"
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    from_port       = 22
+    to_port         = 22
+    protocol        = "tcp"
+    security_groups = [aws_security_group.bastion-allow-ssh.id]
+  }
+  tags = {
+    Name = "allow-ssh-for-private-instances"
+  }
+}
+
 resource "aws_security_group" "private-ssh" {
   vpc_id      = aws_vpc.main.id
   name        = "private-ssh"
@@ -36,7 +59,7 @@ resource "aws_security_group" "private-ssh" {
     from_port       = 22
     to_port         = 22
     protocol        = "tcp"
-    security_groups = [aws_security_group.bastion-allow-ssh.id, aws_security_group.private-ssh.id]
+    security_groups = [aws_security_group.allow-ssh-for-private-instances.id, aws_security_group.bastion-allow-ssh.id]
   }
 
   tags = {
