@@ -17,15 +17,15 @@ add_or_update_host() {
 }
 
 # Add the Ansible Controller to the /etc/hosts file
-add_or_update_host "${ansible_controller_ip} ansible-controller"
+add_or_update_host "${ansible_controller_ip}" "ansible-controller"
 
 # Add the private instances to the /etc/hosts file
 
 # Linux instances
 %{ for instance in jsondecode(private_linux_instances) ~}
-  add_or_update_host "${instance.private_ip} ${instance.tags.Name}"
+  add_or_update_host "${instance.private_ip}" "${instance.tags.Name}"
 %{ endfor ~}
 # Ubuntu instances
 %{ for instance in jsondecode(private_ubuntu_instances) ~}
-  add_or_update_host "${instance.private_ip} ${instance.tags.Name}"
+  add_or_update_host "${instance.private_ip}" "${instance.tags.Name}"
 %{ endfor ~}
