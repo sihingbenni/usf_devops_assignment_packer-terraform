@@ -9,6 +9,17 @@ data "template_file" "update_hosts_script" {
 }
 
 resource "null_resource" "update_hosts" {
+  depends_on = [
+    aws_instance.ansible_controller,
+    aws_instance.private_linux_instances,
+    aws_instance.private_ubuntu_instances,
+    aws_instance.bastion
+  ]
+
+  triggers = {
+    always_run = timestamp()
+  }
+
   connection {
     type        = "ssh"
     host        = aws_instance.bastion.public_ip
