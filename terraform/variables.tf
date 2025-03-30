@@ -52,3 +52,12 @@ variable "private_key_path" {
   type        = string
   description = "Path to your private key"
 }
+
+# variables
+variable "ubuntu_user" {
+  default = "ubuntu"
+}
+
+variable "linux_user" {
+  default = "ec2-user"
+}
