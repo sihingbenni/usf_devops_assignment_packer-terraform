@@ -2,17 +2,17 @@
 
 # Function to add or update a line in /etc/hosts
 add_or_update_host() {
-  local ip="$1"
-  local hostname="$2"
-  local entry="${ip} ${hostname}"
+  local ip="$$1"
+  local hostname="$$2"
+  local entry="$${ip} $${hostname}"
 
   # Check if the entry already exists
-  if grep -q "${hostname}" /etc/hosts; then
+  if grep -q "$${hostname}" /etc/hosts; then
     # Replace all existing entries with the new one
-    sudo sed -i "/${hostname}/c\\${entry}" /etc/hosts
+    sudo sed -i "/$${hostname}/c\\$${entry}" /etc/hosts
   else
     # Add the new entry to the end of the file
-    echo "${entry}" | sudo tee -a /etc/hosts > /dev/null
+    echo "$${entry}" | sudo tee -a /etc/hosts > /dev/null
   fi
 }
 
