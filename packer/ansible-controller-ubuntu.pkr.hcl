@@ -15,6 +15,16 @@ build {
     "source.amazon-ebs.ansible-controller-ubuntu"
   ]
 
+  # install ansible
+  provisioner "shell" {
+    inline = [
+      "sudo apt update",
+      "sudo apt install software-properties-common",
+      "sudo add-apt-repository --yes --update ppa:ansible/ansible",
+      "sudo apt install -y ansible"
+    ]
+  }
+
   # Add the public key, so that the Bastion Host can connect to the Ansible Controller
   provisioner "file" {
     source      = var.public_key_path
