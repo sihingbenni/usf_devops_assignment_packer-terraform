@@ -1,20 +1,5 @@
-# Assignment #8 - Packer & Terraform
+# Assignment #10 - Ansible Playbook
 ## CS-486 - DevOps
-
----
-This repository is splint into two parts:
-
-### Task A: Packer
-#### Create a custom AWS AMI using Packer that contains the following:
-- Amazon Linux 
-- Docker 
-- Your SSH public key is set so you can log in using your private key
-
-### Task B: Terraform
-#### Create Terraform scripts to provision AWS resources:
-- VPC, private subnets, public subnets, all necessary routes (use modules)
-- 1 bastion host in the public subnet (accept only your IP on port 22)
-- 6 EC2 instances in the private subnet using your new AMI created from Packer
 
 ---
 
@@ -25,20 +10,14 @@ This repository is splint into two parts:
 
 ## Instructions to Run:
 
-### Task A: Packer
-Run the following commands to create a custom AWS AMI using Packer:
+Run the following commands to create three different ami's using packer:
 1. `cd packer` to navigate to the packer directory
 2. Copy the `variables.pkr.hcl.example` file to `variables.pkr.hcl` and fill in the required variables
 3. Run `packer init .` to initialize the packer template
 4. Run `packer validate .` to validate the packer template
-5. Run `packer build .` to build the AMI
+5. Run `packer build .` to build the ubuntu, linux and ansible controller AMIs
+6. Note down the AMI IDs for the ubuntu, linux and ansible controller AMIs
 
-#### Expected Results:
-- A new AMI will be created in your AWS account
-![Packer AMI](packer/expected_results/ami_catalog_view.png)
-- View: [Log Output](packer/expected_results/expected_packer_output.log)
-
-### Task B: Terraform
 Run the following commands to provision AWS resources using Terraform:
 1. `cd terraform` to navigate to the terraform directory
    1. (If needed cd back to the root directory and then navigate to the terraform directory)
@@ -48,16 +27,12 @@ Run the following commands to provision AWS resources using Terraform:
 5. Run `terraform plan` to create and view the execution plan
 6. Run `terraform apply` to apply the changes and provision the resources
 
-#### Expected Results:
-- VPC, private subnets, public subnets, all necessary routes will be created
-- 6 EC2 instances in the private subnet using your new AMI created from Packer
-- ![Instances Overview](terraform/expected_results/ec2_instances_overview.png)
-- 1 bastion host in the public subnet (accept only your IP on port 22)
-- ![Bastion Host](terraform/expected_results/bastion_instance_overview.png)
-- ![Bastion Host Security Group](terraform/expected_results/bastion_security_group.png)
-- Private Instance Example: only private IP is accessible
-- ![Private Instance](terraform/expected_results/private_instance_overview.png)
-- SSH Connection to Bastion Host: `ssh -i <path_to_private_key> ec2-user@<bastion_public_ip>`
-- ![SSH Connection](terraform/expected_results/ssh_to_bastion_host.png)
-- Terraform Output log:
-- View: [Log Output](terraform/expected_results/terraform_output.log)
+
+(you need to connect with an ssh-agent via the bastion host):
+1. `eval `ssh-agent -s`
+2. `ssh-add <your-private-key>`
+3. `ssh -A ec2-user@<bastion-public-dns>`
+4. `ssh ubuntu@ansible-controller` (a host name exists for the ansible controller)
+
+Run the following commands on the ansible-controller to run the playbook:
+1. ansible-playbook ec2-instances.playbook.yml
