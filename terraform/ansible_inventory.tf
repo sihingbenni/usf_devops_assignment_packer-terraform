@@ -26,13 +26,13 @@ resource "null_resource" "deploy_inventory" {
     destination = "/home/${var.ubuntu_user}/inventory.ini"
 
     connection {
-      type         = "ssh"
-      user         = var.ubuntu_user
-      private_key = file(var.private_key_path)
-      host         = aws_instance.ansible_controller.private_ip
-      bastion_host = aws_instance.bastion.public_ip
-      bastion_user = "ec2-user"
-      bastion_private_key  = file(var.private_key_path)
+      type                = "ssh"
+      user                = var.ubuntu_user
+      private_key         = file(var.private_key_path)
+      host                = aws_instance.ansible_controller.private_ip
+      bastion_host        = aws_instance.bastion.public_ip
+      bastion_user        = "ec2-user"
+      bastion_private_key = file(var.private_key_path)
     }
   }
 
@@ -44,12 +44,12 @@ resource "null_resource" "deploy_inventory" {
     ]
 
     connection {
-      type         = "ssh"
-      user         = var.ubuntu_user
-      private_key = file(var.private_key_path)
-      host         = aws_instance.ansible_controller.private_ip
-      bastion_host = aws_instance.bastion.public_ip
-      bastion_user = "ec2-user"
+      type                = "ssh"
+      user                = var.ubuntu_user
+      private_key         = file(var.private_key_path)
+      host                = aws_instance.ansible_controller.private_ip
+      bastion_host        = aws_instance.bastion.public_ip
+      bastion_user        = "ec2-user"
       bastion_private_key = file(var.private_key_path)
     }
   }
