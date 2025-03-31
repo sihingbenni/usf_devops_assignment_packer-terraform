@@ -44,17 +44,17 @@ resource "aws_instance" "ansible_controller" {
   ]
 
   provisioner "file" {
-    source = "${path.module}/ansible/ec2-instances.playbook.yml"
+    source      = "${path.module}/ansible/ec2-instances.playbook.yml"
     destination = "/home/${var.ubuntu_user}/ec2-instances.playbook.yml"
 
     connection {
-        type = "ssh"
-        user = var.ubuntu_user
-        private_key = file(var.private_key_path)
-        host = self.private_ip
-        bastion_host = aws_instance.bastion.public_ip
-        bastion_user = "ec2-user"
-        bastion_private_key = file(var.private_key_path)
+      type                = "ssh"
+      user                = var.ubuntu_user
+      private_key         = file(var.private_key_path)
+      host                = self.private_ip
+      bastion_host        = aws_instance.bastion.public_ip
+      bastion_user        = "ec2-user"
+      bastion_private_key = file(var.private_key_path)
     }
   }
 
