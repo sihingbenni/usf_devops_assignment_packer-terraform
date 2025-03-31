@@ -1,0 +1,51 @@
+---
+- name: Configure EC2 instances
+  vars:
+    ansible_ssh_common_args: '-o StrictHostKeyChecking=no'
+  hosts: all
+  become: yes
+  tasks:
+    # Package updates for Ubuntu
+    - name: Update and upgrade apt packages
+      apt:
+        update_cache: yes
+        upgrade: yes
+      when: ansible_os_family == 'Debian'
+
+    # Package updates for Amazon Linux
+    - name: Update yum packages
+      yum:
+        name: '*'
+        update_cache: yes
+        state: latest
+      when: ansible_os_family == 'RedHat'
+
+    # Docker installation for Ubuntu
+    - name: Ensure Docker is installed (Ubuntu)
+      apt:
+        name: docker.io
+        state: latest
+      when: ansible_os_family == 'Debian'
+
+    # Docker installation for Amazon Linux
+    - name: Ensure Docker is installed (Amazon Linux)
+      yum:
+        name: docker
+        state: latest
+      when: ansible_os_family == 'RedHat'
+
+    # Verify Docker service
+    - name: Ensure Docker is running
+      service:
+        name: docker
+        state: started
+        enabled: yes
+
+    # Disk usage check
+    - name: Check disk usage
+      command: df -h
+      register: disk_usage
+
+    - name: Display disk usage report
+      debug:
+        msg: "Disk usage on {{ inventory_hostname }}:\n{{ disk_usage.stdout }}"
