@@ -35,4 +35,4 @@ Run the following commands to provision AWS resources using Terraform:
 4. `ssh ubuntu@ansible-controller` (a host name exists for the ansible controller)
 
 Run the following commands on the ansible-controller to run the playbook:
-1. ansible-playbook ec2-instances.playbook.yml
+1. `ansible-playbook ec2-instances.playbook.yml`
